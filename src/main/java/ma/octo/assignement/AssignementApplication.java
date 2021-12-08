@@ -6,12 +6,15 @@ import ma.octo.assignement.domain.Virement;
 import ma.octo.assignement.repository.CompteRepository;
 import ma.octo.assignement.repository.UtilisateurRepository;
 import ma.octo.assignement.repository.VirementRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.util.Date;
 
 @SpringBootApplication
@@ -35,8 +38,10 @@ public class AssignementApplication implements CommandLineRunner {
 		utilisateur1.setFirstname("first1");
 		utilisateur1.setGender("Male");
 
+
 		utilisateurRepository.save(utilisateur1);
 
+		System.out.println(utilisateur1 + " Saved");
 
 		Utilisateur utilisateur2 = new Utilisateur();
 		utilisateur2.setUsername("user2");
@@ -45,6 +50,7 @@ public class AssignementApplication implements CommandLineRunner {
 		utilisateur2.setGender("Female");
 
 		utilisateurRepository.save(utilisateur2);
+		System.out.println(utilisateur2 + " Saved");
 
 		Compte compte1 = new Compte();
 		compte1.setNrCompte("010000A000001000");
@@ -52,7 +58,9 @@ public class AssignementApplication implements CommandLineRunner {
 		compte1.setSolde(BigDecimal.valueOf(200000L));
 		compte1.setUtilisateur(utilisateur1);
 
+
 		compteRepository.save(compte1);
+		System.out.println(compte1+ " de l: "+utilisateur1 + " Saved");
 
 		Compte compte2 = new Compte();
 		compte2.setNrCompte("010000B025001000");
@@ -61,6 +69,8 @@ public class AssignementApplication implements CommandLineRunner {
 		compte2.setUtilisateur(utilisateur2);
 
 		compteRepository.save(compte2);
+		System.out.println(compte2+ " de l: "+utilisateur2 + " Saved");
+
 
 		Virement v = new Virement();
 		v.setMontantVirement(BigDecimal.TEN);
@@ -69,6 +79,9 @@ public class AssignementApplication implements CommandLineRunner {
 		v.setDateExecution(new Date());
 		v.setMotifVirement("Assignment 2021");
 
+
 		virementRepository.save(v);
+		System.out.println("Virement "+BigDecimal.TEN+"succes de "+compte1+ " de l: "+utilisateur1 + " a " + compte2+ " de l: "+utilisateur2 );
+
 	}
 }

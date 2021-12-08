@@ -1,5 +1,7 @@
 package ma.octo.assignement.exceptions;
 
+import org.springframework.http.HttpStatus;
+
 public class TransactionException extends Exception {
 
   private static final long serialVersionUID = 1L;
@@ -10,4 +12,5 @@ public class TransactionException extends Exception {
   public TransactionException(String message) {
     super(message);
   }
+
 }

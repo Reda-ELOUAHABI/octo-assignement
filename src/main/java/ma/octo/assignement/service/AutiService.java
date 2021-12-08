@@ -12,6 +12,22 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
+/*
+L'annotation @Transactional permet de délimiter une transaction (entre le début et la fin de la méthode) et de définir le comportement transactionnel d'une méthode.
+No-rollback-for : la ou les exceptions (séparées ...
+Rollback-for : la ou les exceptions (séparées par ...
+Propagation : mode de propagation de la trans...
+Isolation : niveau d'isolation de la transaction
+
+
+where we use Transactional
+votre appel est"change password". Qui consiste en deux opérations
+
+changer le mot de passe.
+Vérifier le changement.
+envoyer au client que le mot de passe a changé.
+ainsi, si la vérification échoue, alors le mot de passe doit changer
+ aussi l'échec? */
 public class AutiService {
 
     Logger LOGGER = LoggerFactory.getLogger(AutiService.class);
@@ -20,9 +36,7 @@ public class AutiService {
     private AuditVirementRepository auditVirementRepository;
 
     public void auditVirement(String message) {
-
         LOGGER.info("Audit de l'événement {}", EventType.VIREMENT);
-
         AuditVirement audit = new AuditVirement();
         audit.setEventType(EventType.VIREMENT);
         audit.setMessage(message);
@@ -33,7 +47,6 @@ public class AutiService {
     public void auditVersement(String message) {
 
         LOGGER.info("Audit de l'événement {}", EventType.VERSEMENT);
-
         AuditVirement audit = new AuditVirement();
         audit.setEventType(EventType.VERSEMENT);
         audit.setMessage(message);

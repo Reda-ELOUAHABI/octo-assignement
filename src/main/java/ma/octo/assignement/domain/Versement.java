@@ -19,6 +19,7 @@ public class Versement {
   @Temporal(TemporalType.TIMESTAMP)
   private Date dateExecution;
 
+  //  the different attribute from virement
   @Column
   private String nom_prenom_emetteur;
 

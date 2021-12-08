@@ -47,9 +47,24 @@ public class Compte {
   }
 
   public Utilisateur getUtilisateur() {
+    /*todo: *8-bug on the sameType SpotBug: malicious code vulnerability of type
+     *Methode returning array may expose internal representation
+     *  */
     return utilisateur;
   }
 
+  /*todo: *8-bug on the sameType SpotBug: malicious code vulnerability of type
+  Storing reference to mutable object
+  May expose internal representation by incorporating reference to mutable object
+This code stores a reference to an externally mutable object into the internal
+representation of the object.  If instances are accessed by untrusted code,
+ and unchecked changes to the mutable object would compromise security or other
+ important properties, you will need to do something different. Storing a copy of
+  the object is better approach in many situations.
+  *
+  * */
+//  Sol Simple [On n'expose pas notre object 'precious']
+//retun Arrays.copyOf(DESCRIPTIONS, DESCRIPTIONS.length); ansteadOf return Description;
   public void setUtilisateur(Utilisateur utilisateur) {
     this.utilisateur = utilisateur;
   }
@@ -60,5 +75,16 @@ public class Compte {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  @Override
+  public String toString() {
+    return "Compte{" +
+            "id=" + id +
+            ", nrCompte='" + nrCompte + '\'' +
+            ", rib='" + rib + '\'' +
+            ", solde=" + solde +
+            ", utilisateur=" + utilisateur +
+            '}';
   }
 }
