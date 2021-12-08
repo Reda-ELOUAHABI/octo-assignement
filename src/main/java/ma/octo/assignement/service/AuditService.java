@@ -32,9 +32,9 @@ Vérifier le changement.
 envoyer au client que le mot de passe a changé.
 ainsi, si la vérification échoue, alors le mot de passe doit changer
  aussi l'échec? */
-public class AutiService {
+public class AuditService {
 
-    Logger LOGGER = LoggerFactory.getLogger(AutiService.class);
+    Logger LOGGER = LoggerFactory.getLogger(AuditService.class);
 
     @Autowired
     private AuditVirementRepository auditVirementRepository;

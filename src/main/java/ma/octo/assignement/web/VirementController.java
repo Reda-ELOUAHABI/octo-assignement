@@ -1,5 +1,6 @@
 package ma.octo.assignement.web;
 
+import lombok.extern.java.Log;
 import ma.octo.assignement.domain.Compte;
 import ma.octo.assignement.domain.Utilisateur;
 import ma.octo.assignement.domain.Versement;
@@ -9,12 +10,12 @@ import ma.octo.assignement.dto.VirementDto;
 import ma.octo.assignement.exceptions.CompteNonExistantException;
 import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
 import ma.octo.assignement.exceptions.TransactionException;
-import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmount_TransactionalException;
+import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmountTransactionalException;
 import ma.octo.assignement.repository.CompteRepository;
 import ma.octo.assignement.repository.UtilisateurRepository;
 import ma.octo.assignement.repository.VersementRepository;
 import ma.octo.assignement.repository.VirementRepository;
-import ma.octo.assignement.service.AutiService;
+import ma.octo.assignement.service.AuditService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ class VirementController {
     @Autowired
     private VirementRepository re2;
     @Autowired
-    private AutiService monservice;
+    private AuditService monservice;
     @Autowired
     private UtilisateurRepository re3;
 
@@ -91,7 +92,8 @@ class VirementController {
 //    Why 201 des le debut , peut etre que ca va echouer
     @ResponseStatus(HttpStatus.CREATED)
 //    void , is not preferable to have
-    public HashMap<String,String> createTransaction(@RequestBody
+//  todo: PMD: J'ai utiliser une interface Map au lieu de Hashmap : to loose coopling
+    public Map<String,String> createTransaction(@RequestBody
                                                             //Map<String,Object> body
                                                             VirementDto virementDto  //deja c'est risquee , c'est la requete n'est pas correcte
                                                     //  sintaxiquement => server Down
@@ -130,15 +132,19 @@ class VirementController {
 //        si on la nomme c2 , ca sera plus lisible
         Compte f12 = rep1
                 .findByNrCompte(virementDto.getNrCompteBeneficiaire());
-
+//todo: PMD: for Maintability reasons : avoid duplicate literals:
+        String compteNonExistant = "Compte Non existant";//repeated 4 times
         if (c1 == null) {
-            System.out.println("Compte Non existant");
-            throw new CompteNonExistantException("Compte Non existant");
+//    todo: PMD System Println:  System.(out|err).print is used, consider using a logger
+//            System.out.println(compteNonExistant);
+LOGGER.error(compteNonExistant);
+            throw new CompteNonExistantException(compteNonExistant);
         }
 
         if (f12 == null) {
-            System.out.println("Compte Non existant");
-            throw new CompteNonExistantException("Compte Non existant");
+            LOGGER.error(compteNonExistant);
+//            System.out.println(compteNonExistant);
+            throw new CompteNonExistantException(compteNonExistant);
         }
 /*todo: correctness type : comparing incompatible types for equality
 * Call to equals(null)
@@ -155,20 +161,23 @@ This method calls equals(Object), passing a null value as the argument.
 
 //     the equals method (and every other method) requires string Variable to not be null.
 //     Alors on utilise comparaison par reference au lieu de valeur(il utilise le hashcode des deux stings
-        if (virementDto.getMontantVirement()==null) {
-            System.out.println("Montant vide");
-            throw new TransactionException("Montant vide");
-        }
+
+//         Pas besoin de tester la nullety, deja on a notre test
+//        if (virementDto.getMontantVirement()==null) {
+//            System.out.println("Montant vide");
+//            throw new TransactionException("Montant vide");
+//        }
 //                mais on doit tester les autres fields:
 //j'ai cree une fonction is Valid dans le contrat virementDto
 
         if (!virementDto.isValid()) {
-            System.out.println("all fields are required");
+            LOGGER.error("all fields are required");
+//            System.out.println("all fields are required");
             throw new TransactionException("all fields are required");
         }
 
         else if (virementDto.getMontantVirement().intValue() == 0) {
-            System.out.println("Montant vide");
+            LOGGER.error("Montant vide");
             throw new TransactionException("Montant vide");
         } else if (virementDto.getMontantVirement().intValue() < 10) {
 //                    response.put("Montant minimal de virement non atteint");
@@ -185,9 +194,9 @@ This method calls equals(Object), passing a null value as the argument.
                     * */
 //                    Old
             //                        Il va nous couper l'execution , wheras we are inside a restAPI app !
-            System.out.println("Montant minimal de virement non atteint");
+            LOGGER.error("Montant minimal de virement non atteint");
             throw new TransactionException("Montant minimal de virement non atteint");
-//         throw new MinimalAmount_TransactionalException("Montant minimal de virement non atteint");
+//         throw new MinimalAmountTransactionalException("Montant minimal de virement non atteint");
 //
 //New Before Using AdviceController
                    /*
@@ -204,13 +213,13 @@ This method calls equals(Object), passing a null value as the argument.
 
 
         } else if (virementDto.getMontantVirement().intValue() > MONTANT_MAXIMAL) {
-            System.out.println("Montant maximal de virement dépassé");
+            LOGGER.error("Montant maximal de virement dépassé");
             throw new TransactionException("Montant maximal de virement dépassé");
         }
 
 //                <=0 , not <0 [-1,-2]
         if (virementDto.getMotif().length() <= 0) {
-            System.out.println("Motif vide");
+            LOGGER.error("Motif vide");
 //            Puisque il sont de la meme class , est ce que on va utiliser un try catch/ ou on cree des exception plus
 //            personnalisee ?? c'est une decision a prendre
             throw new TransactionException("Motif vide");
@@ -273,11 +282,15 @@ the event in the LogRecord.
 
     @PostMapping("/executerVersement")
     @ResponseStatus(HttpStatus.CREATED)
-    public HashMap<String,String> createVersement(
+    public Map<String,String> createVersement(
             @RequestBody VersementDto versementDto)
             throws  CompteNonExistantException,
             TransactionException {
         HashMap<String, String> response = new HashMap<String, String>();
+        if (!versementDto.isValid()) {
+            LOGGER.error("all fields are required");
+            throw new TransactionException("all fields are required");
+        }
         Compte compteAVerser = rep1
                 .findByRib(versementDto.getRib());
 
@@ -292,7 +305,7 @@ the event in the LogRecord.
         versement.setMotifVersement(versementDto.getMotifVersement());
         versement.setNom_prenom_emetteur(versementDto.getNom_prenom_emetteur());
         versement.setDateExecution(versementDto.getDateExecution());
-        System.out.println(versement);
+//        System.out.println(versement);
         vr.save(versement);
 
 //        Add it to audit service

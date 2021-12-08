@@ -3,7 +3,7 @@ package ma.octo.assignement.web.common;
 import ma.octo.assignement.exceptions.CompteNonExistantException;
 import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
 import ma.octo.assignement.exceptions.TransactionException;
-import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmount_TransactionalException;
+import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmountTransactionalException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,11 +24,11 @@ public class ExceptionHandelingController {
     }
 
 
-    //MinimalAmount_TransactionalException.class in case of 4.1 Readme Exception Cases
+    //MinimalAmountTransactionalException.class in case of 4.1 Readme Exception Cases
     @ExceptionHandler(TransactionException.class)
     public ResponseEntity<String> handleMinimalAmountException(Exception ex, WebRequest request) {
-        System.out.println(ex.getMessage());
-        System.out.println(request);
+//        System.out.println(ex.getMessage());
+//        System.out.println(request);
         if(ex.getMessage() == "Montant minimal de virement non atteint") {
             return new ResponseEntity<>("Montant minimal de virement non atteint", null, HttpStatus.BAD_REQUEST);
         }

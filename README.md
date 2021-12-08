@@ -123,3 +123,9 @@ mais je vais citer les etapes pour bien resoudre le probleme :
 4.
 * J'ai utiliser la creation de class pour chaque type d'Exeption(Transactional par exemple) , mais c'est pas conseillee (si on a trop !)
 * mais puisque c'est pas pratique , j'ai analyser plus ce que j'ai sur @Advice , et la fonction qui handle l'exeption , et J'ai pu extraire le bon message
+
+Analyse Statique:
+SpotBugs
+PMD
+
+
