@@ -2,7 +2,9 @@ package ma.octo.assignement.web;
 
 import ma.octo.assignement.domain.Compte;
 import ma.octo.assignement.domain.Utilisateur;
+import ma.octo.assignement.domain.Versement;
 import ma.octo.assignement.domain.Virement;
+import ma.octo.assignement.dto.VersementDto;
 import ma.octo.assignement.dto.VirementDto;
 import ma.octo.assignement.exceptions.CompteNonExistantException;
 import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
@@ -10,6 +12,7 @@ import ma.octo.assignement.exceptions.TransactionException;
 import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmount_TransactionalException;
 import ma.octo.assignement.repository.CompteRepository;
 import ma.octo.assignement.repository.UtilisateurRepository;
+import ma.octo.assignement.repository.VersementRepository;
 import ma.octo.assignement.repository.VirementRepository;
 import ma.octo.assignement.service.AutiService;
 import org.slf4j.Logger;
@@ -49,6 +52,9 @@ class VirementController {
     private AutiService monservice;
     @Autowired
     private UtilisateurRepository re3;
+
+    @Autowired
+    private VersementRepository vr;
 
     @GetMapping("lister_virements")
     List<Virement> loadAll() {
@@ -262,4 +268,49 @@ the event in the LogRecord.
 //    private void save(Virement Virement) {
 //        re2.save(Virement);
 //    }
+
+
+
+    @PostMapping("/executerVersement")
+    @ResponseStatus(HttpStatus.CREATED)
+    public HashMap<String,String> createVersement(
+            @RequestBody VersementDto versementDto)
+            throws  CompteNonExistantException,
+            TransactionException {
+        HashMap<String, String> response = new HashMap<String, String>();
+        Compte compteAVerser = rep1
+                .findByRib(versementDto.getRib());
+
+//      ici tout est bien passee
+        compteAVerser.setSolde(compteAVerser.getSolde().add(versementDto.getMontantVersement()));
+        rep1.save(compteAVerser);
+
+//      Il faut mettre ici Versement
+        Versement versement= new Versement();
+        versement.setCompteBeneficiaire(compteAVerser);
+        versement.setMontantVersement(versementDto.getMontantVersement());
+        versement.setMotifVersement(versementDto.getMotifVersement());
+        versement.setNom_prenom_emetteur(versementDto.getNom_prenom_emetteur());
+        versement.setDateExecution(versementDto.getDateExecution());
+        System.out.println(versement);
+        vr.save(versement);
+
+//        Add it to audit service
+        monservice.auditVirement("Versement depuis " + versementDto.getRib() +" d'un montant de " + versement.getMontantVersement()
+                .toString());
+
+        response.put("status", String.valueOf(HttpStatus.CREATED));
+        response.put("message", versementDto.toString());
+        response.put("compte", compteAVerser.toString());
+        return response;
+    }
+    @GetMapping("lister_versement")
+    List<Versement> loadAllVersements() {
+        List<Versement> all = vr.findAll();
+        if (CollectionUtils.isEmpty(all)) {
+            return null;
+        } else {
+            return all;
+        }
+    }
 }

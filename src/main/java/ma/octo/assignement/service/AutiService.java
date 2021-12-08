@@ -1,7 +1,9 @@
 package ma.octo.assignement.service;
 
+import ma.octo.assignement.domain.AuditVersement;
 import ma.octo.assignement.domain.AuditVirement;
 import ma.octo.assignement.domain.util.EventType;
+import ma.octo.assignement.repository.AuditVersementRepository;
 import ma.octo.assignement.repository.AuditVirementRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import javax.transaction.Transactional;
 
 @Service
 @Transactional
+//c'est comme le principe dans les base de donnees ACID A:atomicity :
+//cad suite d'operation , soit on finit par tout reussit soit rien [sourtout dans BDdistribuee] [les noeud utilise un observateur pour qu'il les synchronise [centralisee] ou le concept distribue  ]
 /*
 L'annotation @Transactional permet de délimiter une transaction (entre le début et la fin de la méthode) et de définir le comportement transactionnel d'une méthode.
 No-rollback-for : la ou les exceptions (séparées ...
@@ -35,6 +39,9 @@ public class AutiService {
     @Autowired
     private AuditVirementRepository auditVirementRepository;
 
+    @Autowired
+    private AuditVersementRepository auditVersementRepository;
+
     public void auditVirement(String message) {
         LOGGER.info("Audit de l'événement {}", EventType.VIREMENT);
         AuditVirement audit = new AuditVirement();
@@ -47,9 +54,9 @@ public class AutiService {
     public void auditVersement(String message) {
 
         LOGGER.info("Audit de l'événement {}", EventType.VERSEMENT);
-        AuditVirement audit = new AuditVirement();
+        AuditVersement audit = new AuditVersement();
         audit.setEventType(EventType.VERSEMENT);
         audit.setMessage(message);
-        auditVirementRepository.save(audit);
+        auditVersementRepository.save(audit);
     }
 }
