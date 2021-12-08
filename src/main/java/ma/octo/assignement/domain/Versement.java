@@ -21,7 +21,7 @@ public class Versement {
 
   //  the different attribute from virement
   @Column
-  private String nom_prenom_emetteur;
+  private String nomPrenomEmetteur;
 
   @ManyToOne
   private Compte compteBeneficiaire;
@@ -70,7 +70,7 @@ public class Versement {
   }
 
   public String getNom_prenom_emetteur() {
-    return nom_prenom_emetteur;
+    return nomPrenomEmetteur;
   }
 
   @Override
@@ -79,13 +79,13 @@ public class Versement {
             "id=" + id +
             ", montantVersement=" + montantVersement +
             ", dateExecution=" + dateExecution +
-            ", nom_prenom_emetteur='" + nom_prenom_emetteur + '\'' +
+            ", nomPrenomEmetteur='" + nomPrenomEmetteur + '\'' +
             ", compteBeneficiaire=" + compteBeneficiaire +
             ", motifVersement='" + motifVersement + '\'' +
             '}';
   }
 
-  public void setNom_prenom_emetteur(String nom_prenom_emetteur) {
-    this.nom_prenom_emetteur = nom_prenom_emetteur;
+  public void setNom_prenom_emetteur(String nomPrenomEmetteur) {
+    this.nomPrenomEmetteur = nomPrenomEmetteur;
   }
 }

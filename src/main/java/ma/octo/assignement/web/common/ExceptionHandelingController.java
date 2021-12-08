@@ -3,7 +3,7 @@ package ma.octo.assignement.web.common;
 import ma.octo.assignement.exceptions.CompteNonExistantException;
 import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
 import ma.octo.assignement.exceptions.TransactionException;
-import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmountTransactionalException;
+//import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmountTransactionalException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -27,12 +27,17 @@ public class ExceptionHandelingController {
     //MinimalAmountTransactionalException.class in case of 4.1 Readme Exception Cases
     @ExceptionHandler(TransactionException.class)
     public ResponseEntity<String> handleMinimalAmountException(Exception ex, WebRequest request) {
-//        System.out.println(ex.getMessage());
+      System.out.println(ex.getMessage());
 //        System.out.println(request);
-        if(ex.getMessage() == "Montant minimal de virement non atteint") {
+//        todo: String Literal
+     if(ex.getMessage() == "Montant minimal de virement non atteint") {
+//        if(ex.getMessage()=="Montant minimal de virement non atteint") {
             return new ResponseEntity<>("Montant minimal de virement non atteint", null, HttpStatus.BAD_REQUEST);
         }
-        else if(ex.getMessage()=="Montant vide"){
+     else if(ex.getMessage() == "Montant minimal de versement non atteint") {
+        return new ResponseEntity<>("Montant minimal de versement non atteint", null, HttpStatus.BAD_REQUEST);
+        }
+        else if(ex.getMessage().equals("Montant vide")){
             return new ResponseEntity<>("Montant vide", null, HttpStatus.BAD_REQUEST);
         }
 //        else if(ex.getMessage()=="all fields are required"){
@@ -43,20 +48,19 @@ public class ExceptionHandelingController {
 //        Don’t Repeat Yourself
 //        Keep It Simple, Stupid Not necessary here
 //        You Ain’t Gonna Need It.
-        else if(ex.getMessage()=="Montant maximal de virement dépassé"){
+        else if(ex.getMessage().equals("Montant maximal de virement dépassé")){
             return new ResponseEntity<>("Montant maximal de virement dépassé", null, HttpStatus.BAD_REQUEST);
         }
-        else if(ex.getMessage()=="Motif vide"){
+        else if(ex.getMessage().equals("Montant maximal de versement dépassé")){
+            return new ResponseEntity<>("Montant maximal de versement dépassé", null, HttpStatus.BAD_REQUEST);
+        }
+        else if(ex.getMessage().equals("Motif vide")){
             return new ResponseEntity<>("Motif vide", null, HttpStatus.BAD_REQUEST);
-        }  else if(ex.getMessage()=="Solde insuffisant pour l'utilisateur"){
+        }  else if(ex.getMessage().equals("Solde insuffisant pour l'utilisateur")){
             return new ResponseEntity<>("Solde insuffisant pour l'utilisateur", null, HttpStatus.BAD_REQUEST);
         }
         else{
             return new ResponseEntity<>("Error Au niveau du transaction", null, HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
-
 }

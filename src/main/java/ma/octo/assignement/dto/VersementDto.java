@@ -3,6 +3,14 @@ package ma.octo.assignement.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/*
+///DTO
+* The Data Transfer Object Design Pattern is one of the enterprise
+*  application architecture patterns that calls for the use of objects
+*  that aggregate and encapsulate data for transfer. There, the main
+*  idea of DTOs is to reduce the number of remote calls that are expensive.
+* */
+
 public class VersementDto {
   private String rib;
   private BigDecimal montantVersement;
@@ -19,23 +27,23 @@ public class VersementDto {
   }
 
   public String getNom_prenom_emetteur() {
-    return nom_prenom_emetteur;
+    return nomPrenomEmetteur;
   }
 
-  public void setNom_prenom_emetteur(String nom_prenom_emetteur) {
-    this.nom_prenom_emetteur = nom_prenom_emetteur;
+  public void setNom_prenom_emetteur(String nomPrenomEmetteur) {
+    this.nomPrenomEmetteur = nomPrenomEmetteur;
   }
 
-  private String nom_prenom_emetteur;
+  private String nomPrenomEmetteur;
 
   public VersementDto(String rib, BigDecimal montantVersement, String motifVersement, Date dateExecution,
-                      String nom_prenom_emetteur
+                      String nomPrenomEmetteur
   ) {
     this.rib = rib;
     this.montantVersement = montantVersement;
     this.motifVersement = motifVersement;
     this.dateExecution = dateExecution;
-    this.nom_prenom_emetteur=nom_prenom_emetteur;
+    this.nomPrenomEmetteur=nomPrenomEmetteur;
   }
 
   public VersementDto() {
@@ -62,7 +70,7 @@ public class VersementDto {
   public boolean isValid(
   ){
     if (rib==null || montantVersement==null
-            || dateExecution==null || nom_prenom_emetteur==null
+            || dateExecution==null || nomPrenomEmetteur==null
         || montantVersement==null
      ){
       return false;
@@ -78,7 +86,7 @@ public class VersementDto {
             "RIB='" + rib + '\'' +
             ", montantVersement=" + montantVersement +
             ", dateExecution=" + dateExecution +
-            ", nom & prenom=" + nom_prenom_emetteur +
+            ", nom & prenom=" + nomPrenomEmetteur +
             ", motif Versement=" + motifVersement +
             '}';
   }

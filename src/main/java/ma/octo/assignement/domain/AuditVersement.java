@@ -17,20 +17,30 @@ public class AuditVersement {
   @Enumerated(EnumType.STRING)
   private EventType eventType;
 
+  /*
+  checkStyle: Hidden Field , I may change configuration to this ,
+  to ignore setters and getters
+  <module name="HiddenField" >
+    <property name="ignoreSetter" value="true" />
+    <property name="ignoreConstructorParameter" value="true" />
+</module>*/
+
+
+
   public Long getId() {
     return id;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setId(Long Id) {
+    this.id = Id;
   }
 
   public String getMessage() {
     return message;
   }
 
-  public void setMessage(String message) {
-    this.message = message;
+  public void setMessage(String Message) {
+    this.message = Message;
   }
 
   public EventType getEventType() {

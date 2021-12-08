@@ -1,6 +1,5 @@
 package ma.octo.assignement.exceptions;
 
-import org.springframework.http.HttpStatus;
 
 public class TransactionException extends Exception {
 

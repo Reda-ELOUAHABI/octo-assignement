@@ -1,31 +1,25 @@
 package ma.octo.assignement.web;
 
-import lombok.extern.java.Log;
+
 import ma.octo.assignement.domain.Compte;
 import ma.octo.assignement.domain.Utilisateur;
-import ma.octo.assignement.domain.Versement;
 import ma.octo.assignement.domain.Virement;
-import ma.octo.assignement.dto.VersementDto;
 import ma.octo.assignement.dto.VirementDto;
 import ma.octo.assignement.exceptions.CompteNonExistantException;
 import ma.octo.assignement.exceptions.SoldeDisponibleInsuffisantException;
 import ma.octo.assignement.exceptions.TransactionException;
-import ma.octo.assignement.exceptions.TransactionExceptionTypes.MinimalAmountTransactionalException;
 import ma.octo.assignement.repository.CompteRepository;
 import ma.octo.assignement.repository.UtilisateurRepository;
-import ma.octo.assignement.repository.VersementRepository;
 import ma.octo.assignement.repository.VirementRepository;
 import ma.octo.assignement.service.AuditService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +32,7 @@ class VirementController {
     //    Simple Greeting
     @GetMapping("/greeting")
     public String greeting() {
-        return " Hello ";
+        return " Hello World ";
     }
 
     public static final int MONTANT_MAXIMAL = 10000;
@@ -53,9 +47,6 @@ class VirementController {
     private AuditService monservice;
     @Autowired
     private UtilisateurRepository re3;
-
-    @Autowired
-    private VersementRepository vr;
 
     @GetMapping("lister_virements")
     List<Virement> loadAll() {
@@ -280,50 +271,4 @@ the event in the LogRecord.
 
 
 
-    @PostMapping("/executerVersement")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Map<String,String> createVersement(
-            @RequestBody VersementDto versementDto)
-            throws  CompteNonExistantException,
-            TransactionException {
-        HashMap<String, String> response = new HashMap<String, String>();
-        if (!versementDto.isValid()) {
-            LOGGER.error("all fields are required");
-            throw new TransactionException("all fields are required");
-        }
-        Compte compteAVerser = rep1
-                .findByRib(versementDto.getRib());
-
-//      ici tout est bien passee
-        compteAVerser.setSolde(compteAVerser.getSolde().add(versementDto.getMontantVersement()));
-        rep1.save(compteAVerser);
-
-//      Il faut mettre ici Versement
-        Versement versement= new Versement();
-        versement.setCompteBeneficiaire(compteAVerser);
-        versement.setMontantVersement(versementDto.getMontantVersement());
-        versement.setMotifVersement(versementDto.getMotifVersement());
-        versement.setNom_prenom_emetteur(versementDto.getNom_prenom_emetteur());
-        versement.setDateExecution(versementDto.getDateExecution());
-//        System.out.println(versement);
-        vr.save(versement);
-
-//        Add it to audit service
-        monservice.auditVirement("Versement depuis " + versementDto.getRib() +" d'un montant de " + versement.getMontantVersement()
-                .toString());
-
-        response.put("status", String.valueOf(HttpStatus.CREATED));
-        response.put("message", versementDto.toString());
-        response.put("compte", compteAVerser.toString());
-        return response;
-    }
-    @GetMapping("lister_versement")
-    List<Versement> loadAllVersements() {
-        List<Versement> all = vr.findAll();
-        if (CollectionUtils.isEmpty(all)) {
-            return null;
-        } else {
-            return all;
-        }
-    }
 }

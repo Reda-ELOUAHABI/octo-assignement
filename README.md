@@ -127,5 +127,6 @@ mais je vais citer les etapes pour bien resoudre le probleme :
 Analyse Statique:
 SpotBugs
 PMD
+CheckStyle
 
 

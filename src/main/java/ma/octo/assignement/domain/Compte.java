@@ -26,24 +26,24 @@ public class Compte {
     return nrCompte;
   }
 
-  public void setNrCompte(String nrCompte) {
-    this.nrCompte = nrCompte;
+  public void setNrCompte(String nbrCompte) {
+    this.nrCompte = nbrCompte;
   }
 
   public String getRib() {
     return rib;
   }
 
-  public void setRib(String rib) {
-    this.rib = rib;
+  public void setRib(String ribX) {
+    this.rib = ribX;
   }
 
   public BigDecimal getSolde() {
     return solde;
   }
 
-  public void setSolde(BigDecimal solde) {
-    this.solde = solde;
+  public void setSolde(BigDecimal soldeX) {
+    this.solde = soldeX;
   }
 
   public Utilisateur getUtilisateur() {
@@ -65,8 +65,8 @@ representation of the object.  If instances are accessed by untrusted code,
   * */
 //  Sol Simple [On n'expose pas notre object 'precious']
 //retun Arrays.copyOf(DESCRIPTIONS, DESCRIPTIONS.length); ansteadOf return Description;
-  public void setUtilisateur(Utilisateur utilisateur) {
-    this.utilisateur = utilisateur;
+  public void setUtilisateur(Utilisateur utilisateurX) {
+    this.utilisateur = utilisateurX;
   }
 
   public Long getId() {

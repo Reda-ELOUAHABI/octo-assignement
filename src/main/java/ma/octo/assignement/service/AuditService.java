@@ -33,7 +33,7 @@ envoyer au client que le mot de passe a changé.
 ainsi, si la vérification échoue, alors le mot de passe doit changer
  aussi l'échec? */
 public class AuditService {
-
+//Variable 'LOGGER' must be private and have accessor methods.
     Logger LOGGER = LoggerFactory.getLogger(AuditService.class);
 
     @Autowired
