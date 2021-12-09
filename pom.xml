@@ -38,6 +38,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<version>1.16.22</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -53,6 +54,8 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
