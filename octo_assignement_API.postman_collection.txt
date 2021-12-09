@@ -1,0 +1,51 @@
+/*
+
+octo_assignement_API
+Make things easier for your teammates with a complete collection description.
+GET
+lister_comptes
+http://localhost:8008/virements/lister_comptes
+Make things easier for your teammates with a complete request description.
+GET
+lister_utilisateurs
+http://localhost:8008/virements/lister_utilisateurs
+Make things easier for your teammates with a complete request description.
+GET
+lister_virements
+http://localhost:8008/versements/lister_versement
+Make things easier for your teammates with a complete request description.
+POST
+executerVersements
+http://localhost:8008/versements/executerVersement
+Make things easier for your teammates with a complete request description.
+Bodyraw (json)
+json
+{
+  "rib": "RIB2",
+  "montantVersement": "900",
+  "dateExecution": "2021-10-10",
+  "motifVersement": "un motif X",
+  "nom_prenom_emetteur": "flan flani"
+}
+GET
+greeting
+http://localhost:8001/virements/greeting
+Make things easier for your teammates with a complete request description.
+POST
+executerViresements
+http://localhost:8008/virements/executerVirements
+Make things easier for your teammates with a complete request description.
+Bodyraw (json)
+json
+{
+  "nrCompteEmetteur": "010000A000001000",
+  "nrCompteBeneficiaire": "010000B025001000",
+  "motif": "un motif donneeee",
+  "montantVirement": "100",
+  "date": "2021-10-10"
+}
+GET
+lister_virements
+http://localhost:8008/virements/lister_virements
+
+*/

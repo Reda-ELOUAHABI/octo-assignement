@@ -71,7 +71,6 @@ public class VersementDto {
   ){
     if (rib==null || montantVersement==null
             || dateExecution==null || nomPrenomEmetteur==null
-        || montantVersement==null
      ){
       return false;
     }
@@ -87,7 +86,7 @@ public class VersementDto {
             ", montantVersement=" + montantVersement +
             ", dateExecution=" + dateExecution +
             ", nom & prenom=" + nomPrenomEmetteur +
-            ", motif Versement=" + motifVersement +
+            ", motif de Versement=" + motifVersement +
             '}';
   }
 

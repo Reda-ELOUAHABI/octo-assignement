@@ -44,8 +44,38 @@ Run command :
 * Do the stuff .
 * Send us the link .
 
+##Analyse Statique:
+* SpotBugs
+* PMD
+* CheckStyle
+* SonarQube
 
-##My Notes:
+
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+
+'
+##My Notes + References
 
 I -Notes-
 
@@ -124,9 +154,6 @@ mais je vais citer les etapes pour bien resoudre le probleme :
 * J'ai utiliser la creation de class pour chaque type d'Exeption(Transactional par exemple) , mais c'est pas conseillee (si on a trop !)
 * mais puisque c'est pas pratique , j'ai analyser plus ce que j'ai sur @Advice , et la fonction qui handle l'exeption , et J'ai pu extraire le bon message
 
-Analyse Statique:
-SpotBugs
-PMD
-CheckStyle
+
 
 

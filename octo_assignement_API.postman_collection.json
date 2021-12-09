@@ -1,0 +1,219 @@
+{
+	"info": {
+		"_postman_id": "d4efdf80-c691-4483-9966-0100df5d015c",
+		"name": "octo_assignement_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "lister_comptes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8008/virements/lister_comptes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"virements",
+						"lister_comptes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lister_utilisateurs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8008/virements/lister_utilisateurs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"virements",
+						"lister_utilisateurs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lister_virements",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8008/versements/lister_versement",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"versements",
+						"lister_versement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "executerVersements",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"rib\": \"RIB2\",\r\n    \"montantVersement\" : \"900\",\r\n    \"dateExecution\" : \"2021-10-10\",\r\n    \"motifVersement\" : \"un motif X\",\r\n    \"nom_prenom_emetteur\": \"flan flani\"\r\n\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8008/versements/executerVersement",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"versements",
+						"executerVersement"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "greeting",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8001/virements/greeting",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8001",
+					"path": [
+						"virements",
+						"greeting"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "executerViresements",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nrCompteEmetteur\": \"010000A000001000\",\r\n    \"nrCompteBeneficiaire\" : \"010000B025001000\",\r\n    \"motif\" : \"un motif donneeee\",\r\n    \"montantVirement\" : \"100\",\r\n    \"date\" : \"2021-10-10\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8008/virements/executerVirements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"virements",
+						"executerVirements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lister_virements",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8008/virements/lister_virements",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8008",
+					"path": [
+						"virements",
+						"lister_virements"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
+
+/*
+
+octo_assignement_API
+Make things easier for your teammates with a complete collection description.
+GET
+lister_comptes
+http://localhost:8008/virements/lister_comptes
+Make things easier for your teammates with a complete request description.
+GET
+lister_utilisateurs
+http://localhost:8008/virements/lister_utilisateurs
+Make things easier for your teammates with a complete request description.
+GET
+lister_virements
+http://localhost:8008/versements/lister_versement
+Make things easier for your teammates with a complete request description.
+POST
+executerVersements
+http://localhost:8008/versements/executerVersement
+Make things easier for your teammates with a complete request description.
+Bodyraw (json)
+json
+{
+  "rib": "RIB2",
+  "montantVersement": "900",
+  "dateExecution": "2021-10-10",
+  "motifVersement": "un motif X",
+  "nom_prenom_emetteur": "flan flani"
+}
+GET
+greeting
+http://localhost:8001/virements/greeting
+Make things easier for your teammates with a complete request description.
+POST
+executerViresements
+http://localhost:8008/virements/executerVirements
+Make things easier for your teammates with a complete request description.
+Bodyraw (json)
+json
+{
+  "nrCompteEmetteur": "010000A000001000",
+  "nrCompteBeneficiaire": "010000B025001000",
+  "motif": "un motif donneeee",
+  "montantVirement": "100",
+  "date": "2021-10-10"
+}
+GET
+lister_virements
+http://localhost:8008/virements/lister_virements
+
+*/
